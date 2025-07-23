@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Weightlifting Tracker</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 400px;
-      margin: auto;
-      padding: 20px;
-      background-color: #000;
-      color: #fff;
-      min-height: 100vh;
-    }
+body {
+  font-family: Arial, sans-serif;
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  min-height: 100vh;
+  color: #fff;
 
+  background: url('baki.png') no-repeat center center fixed;
+  background-size: cover;
+  backdrop-filter: brightness(0.5);
+}
+    
     label, select, input, button {
       display: block;
       margin: 10px 0 5px;
@@ -70,6 +73,17 @@
     h2 {
       margin: 0;
     }
+
+    body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* darker overlay */
+  z-index: -1;
+}
+
+    
   </style>
 </head>
 <body>
