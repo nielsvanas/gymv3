@@ -12,10 +12,12 @@ body {
   padding: 20px;
   min-height: 100vh;
   color: #fff;
+  position: relative;
+  z-index: 1;
 
-  background: url('baki.png') no-repeat center center fixed;
-  background-size: cover;
-  backdrop-filter: brightness(0.5);
+  background: url('baki.png') center center / cover no-repeat fixed;
+  /* ^ THIS fixed + cover makes the parallax effect */
+  filter: contrast(1.1) saturate(1.1);
 }
     
     label, select, input, button {
@@ -74,13 +76,15 @@ body {
       margin: 0;
     }
 
-    body::before {
+body::before {
   content: "";
   position: fixed;
   top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.7); /* darker overlay */
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35); /* dark overlay */
   z-index: -1;
+  pointer-events: none;
 }
 
     
