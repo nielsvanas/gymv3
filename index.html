@@ -127,6 +127,10 @@ html {
 <input id="weight" type="number" min="0" step="0.1" />
 
 <button onclick="addEntry()">Add Entry</button>
+  <button onclick="exportLog()">Export Entries</button>
+  <input type="file" id="importFile" accept=".json" style="display:none" onchange="importLog(event)" />
+  <button onclick="document.getElementById('importFile').click()">Import Entries</button>
+
 
 <label>View By</label>
 <select id="viewMode" onchange="switchView()">
@@ -308,6 +312,47 @@ html {
     document.getElementById('sets').value = '';
     document.getElementById('reps').value = '';
     document.getElementById('weight').value = '';
+  }
+
+   function exportLog() {
+    if (log.length === 0) {
+      alert("No entries to export.");
+      return;
+    }
+
+    const dataStr = JSON.stringify(log, null, 2);
+    const blob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "workout_log.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
+  }
+
+  function importLog(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const imported = JSON.parse(e.target.result);
+        if (!Array.isArray(imported)) throw new Error("Invalid format");
+
+        // Merge or replace? (Here we merge)
+        log = log.concat(imported);
+        localStorage.setItem('weightliftingLog', JSON.stringify(log));
+        renderLog();
+        alert("Entries imported successfully.");
+      } catch (err) {
+        alert("Failed to import file. Make sure it's a valid .json export.");
+      }
+    };
+
+    reader.readAsText(file);
   }
 
   switchView();
